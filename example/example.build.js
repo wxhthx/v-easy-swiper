@@ -666,7 +666,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.hello)), _c('div', {
     staticClass: "myclass"
-  }, [_vm._v(_vm._s(_vm.imageSize.width)), _c('button', {
+  }, [_c('button', {
     on: {
       "click": _vm.showswiper
     }
