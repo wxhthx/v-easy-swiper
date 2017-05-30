@@ -1,57 +1,6 @@
 webpackJsonp([0],[
 /* 0 */,
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__App__);
-
-
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#app',
-  template: '<App/>',
-  components: { App: __WEBPACK_IMPORTED_MODULE_1__App___default.a }
-})
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data () {
-      return {
-        hello: 'helloworld'
-      }
-  }
-});
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -133,29 +82,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(8)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(2),
-  /* template */
-  __webpack_require__(7),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 6 */
+/* 2 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -212,28 +139,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v(_vm._s(_vm.hello))])
-},staticRenderFns: []}
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(3);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("5a3ebcf7", content, true);
-
-/***/ }),
-/* 9 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -252,7 +158,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(10)
+var listToStyles = __webpack_require__(19)
 
 /*
 type StyleObject = {
@@ -454,7 +360,413 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__App__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_js__ = __webpack_require__(7);
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2__index_js__["a" /* default */], {})
+
+new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app',
+  template: '<App/>',
+  components: { App: __WEBPACK_IMPORTED_MODULE_1__App___default.a }
+})
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['images', 'size'],
+  data: function data () {
+    return {
+        cur_index: 0,
+        axixX: 0,
+        duration: '0.3s',
+        interval: null
+    }
+  },
+  computed: {
+    container_width: function () {
+        return this.size.width * this.compouted_images.length + 'px'
+    },
+    translate3d: function () {
+        return '(' + this.axixX + 'px, 0, 0)'
+    },
+    /**
+     * 图片数据进行加工，栈顶栈底分别插入一组数据
+     * 类似 3，1，2，3，1
+     */
+    compouted_images: function () {
+        var newImages = Object.assign([], this.images)
+        // 首尾分别添加对应元素
+        newImages.splice(0, 0, this.images[this.images.length - 1])
+        newImages.push(this.images[0])
+        return newImages
+    }
+  },
+  created: function () {
+    this.axixX = -this.size.width
+    // 自动播放图片
+    this.interval = setInterval(this.turnToNext, 3000)
+  },
+  methods: {
+    /**
+     * 手动向前滚动图片 
+     */
+    turnToPre: function () {
+        if (this.cur_index === this.images.length - 1) {
+            this.axixX = -(this.size.width) * this.images.length
+            this.duration = 'inherit'
+            setTimeout(this.timeout_for_left, 0)
+        } else if (this.cur_index === 0) {
+            this.axixX += this.size.width
+            this.cur_index = this.images.length - 1
+        } else {
+            this.axixX += this.size.width
+            this.cur_index --
+        }
+    },
+    timeout_for_left: function (direc) {
+        this.duration = '0.3s'
+        this.axixX += this.size.width
+        this.cur_index --
+    },
+    timeout_for_right: function () {
+        this.duration = '0.3s'
+        this.axixX = -this.size.width * 2
+        this.cur_index ++
+    },
+    /**
+     * 手动向后滚动图片
+     */
+    turnToNext: function () {
+        if (this.cur_index === 0) {
+            this.duration = 'inherit'
+            this.axixX = -this.size.width
+            // 处理过渡效果，视觉上看上去一个方向滚动
+            setTimeout(this.timeout_for_right, 0)
+        } else if (this.cur_index === this.images.length - 1) {
+            this.axixX -= this.size.width
+            this.cur_index = 0
+        } else {
+            this.axixX -= this.size.width
+            this.cur_index ++
+        }
+    },
+    increment: function () {
+        // 父组件触发该事件
+        this.$emit('clickimg', this.cur_index)
+    }
+  }
+});
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_images_111_jpg__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_images_111_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__assets_images_111_jpg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_images_222_jpg__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_images_222_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_images_222_jpg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_images_333_jpg__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_images_333_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_images_333_jpg__);
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'app',
+  data: function data () {
+      return {
+        hello: 'helloworld',
+        hidden: true,
+        imgSize: {
+          width: 520,
+          height: 280
+        },
+        swiperSrcs: [
+            {src: __WEBPACK_IMPORTED_MODULE_0__assets_images_111_jpg___default.a},
+            {src: __WEBPACK_IMPORTED_MODULE_1__assets_images_222_jpg___default.a},
+            {src: __WEBPACK_IMPORTED_MODULE_2__assets_images_333_jpg___default.a}
+        ]
+      }
+  },
+  methods: {
+    click_img: function (index) {
+      console.log(index)
+    },
+    showswiper: function () {
+      this.hidden = false
+    }
+  }
+});
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Swiper_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Swiper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Swiper_vue__);
+
+// let installed = false
+
+var swiperplugin = {}
+swiperplugin.installed = false
+// Plugin API
+// *********
+swiperplugin.install = function (Vue, opts) {
+  if ( opts === void 0 ) opts = {};
+
+  if (swiperplugin.installed) {
+    return
+  }
+  // const name = opts.name || 'v-easy-swiper'
+  Vue.component('swiper', __WEBPACK_IMPORTED_MODULE_0__components_Swiper_vue___default.a)
+  swiperplugin.installed = true
+}
+/* harmony default export */ __webpack_exports__["a"] = (swiperplugin);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.carousel-control, .carousel-control > .pre_and_next {\n  width: inherit;\n  height: inherit;\n}\n.swiper-show-container {\n  position: relative;\n  overflow: hidden;\n  cursor: pointer;\n}\n.swiper-show-container:hover .pre_and_next, .swiper-show-container:focus .pre_and_next {\n    transition-duration: 2s;\n    display: block;\n}\n.swiper-container {\n  position: absolute;\n  transition-duration: 0.3s;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n.swiper-container > .image-container {\n    float: left;\n}\n.carousel-control {\n  position: absolute;\n}\n.carousel-control > .pre_and_next {\n    position: absolute;\n    top: 50%;\n    display: none;\n}\n.carousel-control .pre-btn, .carousel-control .next-btn {\n    display: inline-block;\n    position: absolute;\n}\n.carousel-control .pre-btn > a, .carousel-control .next-btn > a {\n      width: 48px;\n      height: 42px;\n      display: block;\n      background: transparent;\n}\n.carousel-control .pre-btn {\n    left: 0;\n}\n.carousel-control .pre-btn > a:before {\n      content: '\\E77A';\n}\n.carousel-control .next-btn {\n    right: 0;\n}\n.carousel-control .next-btn > a:before {\n      content: '\\E776';\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/img/111.1d0ddeb.jpg";
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/img/222.c4cd156.jpg";
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/img/333.76bf594.jpg";
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(18)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(5),
+  /* template */
+  __webpack_require__(16),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(17)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(6),
+  /* template */
+  __webpack_require__(15),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "app"
+    }
+  }, [_vm._v(_vm._s(_vm.hello)), _c('div', {
+    staticClass: "myclass"
+  }, [_vm._v(_vm._s(_vm.imageSize.width)), _c('button', {
+    on: {
+      "click": _vm.showswiper
+    }
+  }), (_vm.hidden) ? _c('swiper', {
+    attrs: {
+      "images": _vm.swiperSrcs,
+      "size": _vm.imgSize
+    },
+    on: {
+      "clickimg": _vm.click_img
+    }
+  }) : _vm._e()], 1)])
+},staticRenderFns: []}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "swiper-show-container",
+    style: ({
+      width: _vm.size.width + 'px',
+      height: _vm.size.height + 'px'
+    }),
+    on: {
+      "click": _vm.increment
+    }
+  }, [_c('div', {
+    staticClass: "swiper-container",
+    style: ({
+      width: _vm.container_width,
+      transform: 'translate3d' + _vm.translate3d,
+      transitionDuration: _vm.duration
+    })
+  }, _vm._l((_vm.compouted_images), function(item, index) {
+    return _c('div', {
+      staticClass: "image-container"
+    }, [_c('img', {
+      style: ({
+        width: _vm.size.width + 'px',
+        height: _vm.size.height + 'px'
+      }),
+      attrs: {
+        "src": item.src
+      }
+    })])
+  })), _c('div', {
+    staticClass: "carousel-control"
+  }, [_c('div', {
+    staticClass: "pre_and_next iconfont"
+  }, [_c('li', {
+    staticClass: "pre-btn"
+  }, [_c('a', {
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.turnToPre($event)
+      }
+    }
+  })]), _c('li', {
+    staticClass: "next-btn"
+  }, [_c('a', {
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.turnToNext($event)
+      }
+    }
+  })])])])])
+},staticRenderFns: []}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(8);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("2d7a91ef", content, true);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(9);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("265b5c4e", content, true);
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 /**
@@ -487,13 +799,13 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 11 */,
-/* 12 */
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(1);
+module.exports = __webpack_require__(4);
 
 
 /***/ })
-],[12]);
+],[21]);
 //# sourceMappingURL=example.build.js.map

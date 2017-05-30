@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var utils = require('./utils')
 // var vueLoaderConfig
 const config = {
   entry: {
@@ -22,7 +23,13 @@ const config = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader', 
+        options:{
+            loaders: {
+                scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
+                sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
+            }
+        }
       },
       {
         test: /\.js$/,
@@ -33,6 +40,14 @@ const config = {
         test: /\.css$/,
         loader: 'style-loader!css-loader',
         exclude: path.resolve(__dirname, "../node_modules")
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        }
       },
       {
         test: /\.s[a|c]ss$/,
