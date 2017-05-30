@@ -1,6 +1,6 @@
 {
   "name": "v-easy-swiper",
-  "version": "1.0.0",
+  "version": "1.0.0-beta0",
   "description": "a swiper plugin based on vue.js and scss",
   "main": "./dist/v-easy-swiper.js",
   "scripts": {
