@@ -7,7 +7,7 @@
 > v-easy-swiper is a vue plugin which based on vue.js and css3.It expressed a easier principle to compare with other similar plugins.Of course, it has a little disadvantages to wait you to discovry and update it with me.
 
 ## Live Demo
-[Click me](https://github.com/wxhthx/v-easy-swiper "swiper") 
+[Click me](https://wxhthx.github.io/v-easy-swiper/example/index.html "swiper") 
 
 ## Development Setup
 ``` bash
