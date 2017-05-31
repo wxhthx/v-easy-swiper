@@ -1,6 +1,6 @@
 <template lang="jade">
   div.swiper-show-container(:style="{ width: size.width + 'px', height: size.height + 'px'}"  v-on:click="increment")
-    div.swiper-container(:style="{ width: container_width, transform: 'translate3d' + translate3d, transitionDuration: duration }")
+    div.swiper-container(:style="{ width: container_width, transform: 'translate3d' + translate3d, transitionDuration: duration }" @transitionend="transitionend")
         div.image-container(v-for="(item, index) of compouted_images")
             img(:src="item.src" v-bind:style="{ width: size.width + 'px', height: size.height + 'px'}")
     div.carousel-control
@@ -9,6 +9,8 @@
                 a(v-on:click.prevent="turnToPre")
             li.next-btn
                 a(v-on:click.prevent="turnToNext")
+        ul.pagination
+            li.pagination-item(v-for="(pagItem, pagInex) of images" v-bind:class="{'selected': pagInex === cur_index}" @click="selectItem(pagInex)")
 </template>
 <script>
 export default {
@@ -18,7 +20,8 @@ export default {
         cur_index: 0,
         axixX: 0,
         duration: '0.3s',
-        interval: null
+        interval: null,
+        transitioning: false
     }
   },
   computed: {
@@ -50,11 +53,12 @@ export default {
      * 手动向前滚动图片 
      */
     turnToPre: function () {
-        if (this.cur_index === this.images.length - 1) {
-            this.axixX = -(this.size.width) * this.images.length
-            this.duration = 'inherit'
-            setTimeout(this.timeout_for_left, 0)
-        } else if (this.cur_index === 0) {
+        if (this.transitioning) {
+            return
+        }
+        this.duration = '0.3s'
+        this.transitioning = true
+        if (this.cur_index === 0) {
             this.axixX += this.size.width
             this.cur_index = this.images.length - 1
         } else {
@@ -62,26 +66,16 @@ export default {
             this.cur_index --
         }
     },
-    timeout_for_left: function (direc) {
-        this.duration = '0.3s'
-        this.axixX += this.size.width
-        this.cur_index --
-    },
-    timeout_for_right: function () {
-        this.duration = '0.3s'
-        this.axixX = -this.size.width * 2
-        this.cur_index ++
-    },
     /**
      * 手动向后滚动图片
      */
     turnToNext: function () {
-        if (this.cur_index === 0) {
-            this.duration = 'inherit'
-            this.axixX = -this.size.width
-            // 处理过渡效果，视觉上看上去一个方向滚动
-            setTimeout(this.timeout_for_right, 0)
-        } else if (this.cur_index === this.images.length - 1) {
+        if (this.transitioning) {
+            return
+        }
+        this.transitioning = true
+        this.duration = '0.3s'
+        if (this.cur_index === this.images.length - 1) {
             this.axixX -= this.size.width
             this.cur_index = 0
         } else {
@@ -92,6 +86,29 @@ export default {
     increment: function () {
         // 父组件触发该事件
         this.$emit('clickimg', this.cur_index)
+    },
+    transitionend: function () {
+        if (this.cur_index === 0) {
+            this.duration = 'inherit'
+            this.axixX = -this.size.width
+        } else if (this.cur_index === this.images.length - 1 ) {
+            this.duration = 'inherit'
+            this.axixX = -this.size.width * this.images.length
+        }
+        this.transitioning = false
+    },
+    /**
+     * select pagination item
+     **/
+    selectItem: function (index) {
+        console.log('selected' + index)
+        if (this.transitioning) {
+            return
+        }
+        this.transitioning = true
+        this.duration = '0.3s'
+        this.axixX = -this.size.width * (index + 1)
+        this.cur_index = index
     }
   }
 }
@@ -100,6 +117,28 @@ export default {
     %_inherit_class {
         width: inherit;
         height: inherit;
+    }
+    @font-face {font-family: "iconfont";
+        // src: url('./assets/iconfont/iconfont.eot?t=1495507826600'); /* IE9*/
+        // src: url('./assets/iconfont/iconfont.eot?t=1495507826600#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        // url('./assets/iconfont/iconfont.woff?t=1495507826600') format('woff'), /* chrome, firefox */
+        // url('./assets/iconfont/iconfont.ttf?t=1495507826600') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+        // url('./assets/iconfont/iconfont.svg?t=1495507826600#iconfont') format('svg'); /* iOS 4.1- */
+        // @font-face {
+        // font-family: 'iconfont';  /* project id 309039 */
+        src: url('//at.alicdn.com/t/font_f67mfryclerk9.eot');
+        src: url('//at.alicdn.com/t/font_f67mfryclerk9.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_f67mfryclerk9.woff') format('woff'),
+        url('//at.alicdn.com/t/font_f67mfryclerk9.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_f67mfryclerk9.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+        font-family:"iconfont" !important;
+        font-size: 3em;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
     .swiper-show-container {
         position: relative;
@@ -147,6 +186,30 @@ export default {
             right: 0;
             & > a:before {
                 content: '\e776';
+            }
+        }
+    }
+    .pagination {
+        border-radius: 10px;
+        position: absolute;
+        bottom: 15px;
+        height: 13px;
+        text-align: center;
+        font-size: 0;
+        left: 50%;
+        margin-left: -39px;
+        background-color: rgba(255,255,255,.3);
+        display: block;
+        & > .pagination-item {
+            list-style: none;
+            display: inline-block;
+            margin: 2px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgb(236, 236, 236);
+            &.selected {
+                background: rgb(211, 60, 62);
             }
         }
     }
