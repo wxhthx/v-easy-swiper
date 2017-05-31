@@ -3,43 +3,53 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
+var baseWebpackConfig = require('./webpack.base.config')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-var env = config.build.env
+var env = config.example.env
 
 var webpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    example: ['./src/example/main.js'],
+    vendor: ['vue'],
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
     })
   },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.common'
+    }
+  },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
-    path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    path: path.resolve(__dirname, "../docs"),
+    // publicPath: '/',
+    filename: './js/[name].build.js',
+    chunkFilename: utils.assetsPath('./js/[id].[chunkhash].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new webpack.BannerPlugin('/**!\n* @license MIT\n* anthor: Alex Wen\n* Xi\'an\n**/', {}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
       sourceMap: true
     }),
-    // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css')
+      filename: utils.assetsPath('./css/[name].[contenthash].css')
     }),
+    new webpack.BannerPlugin({banner: '@license MIT\nversion:1.0.0-bate0\nanthor: Alex Wen\nXi\'an\nEmail: wenxinghua1990@163.com', entryOnly: true}),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
@@ -47,22 +57,10 @@ var webpackConfig = merge(baseWebpackConfig, {
         safe: true
       }
     }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.build.index,
+      filename: 'index.html',
       template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      inject: true
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
@@ -92,7 +90,11 @@ var webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ])
-  ]
+  ],
+  devtool: 'source-map',
+  performance: {
+    hints: false
+  }
 })
 
 if (config.build.productionGzip) {

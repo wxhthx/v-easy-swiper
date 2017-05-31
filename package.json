@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildp":  "node build/build.plugin.js",
+    "build1": "node build1/build.js",
+    "prod": "node build1/build.example.js",
     "dev": "node build/devserver.copy.js",
-    "build": "node build/build.js",
     "release": "webpack --progress --hide-modules --config  ./build/webpack.release.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js"
   },
   "repository": {
