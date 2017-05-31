@@ -91,7 +91,7 @@ export default {
         if (this.cur_index === 0) {
             this.duration = 'inherit'
             this.axixX = -this.size.width
-        } else if (this.cur_index === this.images.length - 1 ) {
+        } else if (this.cur_index === this.images.length - 1) {
             this.duration = 'inherit'
             this.axixX = -this.size.width * this.images.length
         }
