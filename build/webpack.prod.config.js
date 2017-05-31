@@ -23,7 +23,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('[name].min.js'),
+    filename: '[name].min.js',
     library: 'Swiper',
     libraryTarget: 'umd'
   },
@@ -38,7 +38,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       },
       sourceMap: true
     }),
-    new webpack.BannerPlugin({banner: '@license MIT\nversion:1.0.0-bate0\nanthor: Alex Wen\nXi\'an\nEmail: wenxinghua1990@163.com', entryOnly: true}),
+    new webpack.BannerPlugin({banner: '@license MIT\nversion:1.0.0-bate1\nanthor: Alex Wen\nXi\'an\nEmail: wenxinghua1990@163.com', entryOnly: true}),
     // // Compress extracted CSS. We are using this plugin so that possible
     // // duplicated CSS from different components can be deduped.
     // new OptimizeCSSPlugin({
