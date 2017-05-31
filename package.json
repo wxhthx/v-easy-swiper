@@ -1,21 +1,17 @@
 {
   "name": "v-easy-swiper",
-  "version": "1.0.0-beta0",
+  "version": "1.0.0-beta1",
   "description": "a swiper plugin based on vue.js and scss",
-  "main": "./dist/v-easy-swiper.js",
+  "main": "./dist/v-easy-swiper.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildp":  "node build/build.plugin.js",
-    "build1": "node build1/build.js",
-    "prod": "node build1/build.example.js",
-    "dev": "node build/devserver.copy.js",
-    "release": "webpack --progress --hide-modules --config  ./build/webpack.release.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js"
+    "build": "node build/build.js",
+    "prod": "node build/build.example.js",
+    "dev": "node build/devserver.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wxhthx/v-easy-swiper.git"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

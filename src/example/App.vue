@@ -1,6 +1,5 @@
 <template lang="jade">
-  div#app {{hello}}
-    div.myclass
+    div.mySwiper
       button(@click="showswiper")
       swiper(v-if="hidden" v-bind:images="swiperSrcs" v-bind:size="imgSize" v-on:clickimg="click_img")
 </template>
@@ -35,6 +34,8 @@ export default {
   }
 }
 </script>
-<style lang="sass">
-
+<style lang="scss" scoped>
+  .mySwiper {
+    margin: 0 auto;
+  }
 </style>

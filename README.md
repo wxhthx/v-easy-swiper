@@ -1,27 +1,28 @@
 # v-easy-swiper
 
-标签（空格分隔）： swiper vue.js css3
+ swiper vue.js css3
 ---
 
 ## Intro
 > v-easy-swiper is a vue plugin which based on vue.js and css3.It expressed a easier principle to compare with other similar plugins.Of course, it has a little disadvantages to wait you to discovry and update it with me.
 
 ## Live Demo
-[Click me](https://wxhthx.github.io/v-easy-swiper/example/index.html "swiper") 
+[Click me](https://wxhthx.github.io/v-easy-swiper/ "swiper") 
 
 ## Development Setup
 ``` bash
-# build plugin
-npm run buildp
-
-# build example
-npm run build
-
+# install plugin
+npm install 
 # run example
 npm run dev
 ```
 
 ## Usage
+```bash
+# NPM下载
+npm install v-easy-swiper
+```
+
 ```javascript
 /**
 * 全局引入
@@ -30,12 +31,14 @@ import Vue from 'vue'
 import EasySwiper from 'v-easy-swiper'
 Vue.use(EasySwiper, {})
 ```
+
 ```JADE
 // Alse you can choose origin html
 <template lang="jade">
 swiper(:images="swiperSrcs" v-bind:size="imgSize" v-on:clickimg="click_img")
 </template>
 ```
+
 ```javascript
 /**
 * component config
@@ -69,6 +72,7 @@ export default {
 }
 <script>
 ```
+
 ## License
 MIT
 
