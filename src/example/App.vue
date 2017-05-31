@@ -1,7 +1,6 @@
 <template lang="jade">
     div.mySwiper
-      button(@click="showswiper")
-      swiper(v-if="hidden" v-bind:images="swiperSrcs" v-bind:size="imgSize" v-on:clickimg="click_img")
+      swiper(v-bind:images="swiperSrcs" v-bind:size="imgSize" v-on:clickimg="click_img")
 </template>
 <script>
 import a from '../assets/images/111.jpg'
@@ -11,8 +10,6 @@ export default {
   name: 'app',
   data () {
       return {
-        hello: 'helloworld',
-        hidden: true,
         imgSize: {
           width: 520,
           height: 280
@@ -27,9 +24,6 @@ export default {
   methods: {
     click_img: function (index) {
       console.log(index)
-    },
-    showswiper: function () {
-      this.hidden = false
     }
   }
 }
