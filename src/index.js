@@ -1,3 +1,9 @@
+/**!
+ * @license MIT
+ * Alex.Wen
+ * Xi'an
+ * wenxinghua1990@163.com
+ */
 import Swiper from './components/Swiper.vue'
 // let installed = false
 
